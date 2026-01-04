@@ -1,6 +1,6 @@
+// components/VoiceOverlay.js
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { COLORS } from '../utils/constants';
 
 export default function VoiceOverlay({ text }) {
   return (
@@ -12,13 +12,16 @@ export default function VoiceOverlay({ text }) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    backgroundColor: COLORS.background,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    paddingVertical: 20,
+    paddingHorizontal: 24,
+    borderRadius: 12,
   },
   text: {
-    color: COLORS.primary,
-    fontSize: 22,
+    color: '#FFD700',
+    fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
+    lineHeight: 36,
   },
 });

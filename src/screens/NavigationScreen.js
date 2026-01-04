@@ -1,20 +1,40 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+// screens/NavigationScreen.js
+import React, { useState } from 'react';
+import { View, StyleSheet, SafeAreaView } from 'react-native';
+import { CameraView } from 'expo-camera';
 import MicButton from '../components/MicButton';
 import VoiceOverlay from '../components/VoiceOverlay';
-import { COLORS } from '../utils/constants';
 
 export default function NavigationScreen() {
+  const [isListening, setIsListening] = useState(false);
+  const [instruction, setInstruction] = useState("Head north on Main St.\nTurn right in 100m.");
+
+  const handleStartListening = () => {
+    setIsListening(true);
+    console.log('Listening...');
+  };
+
+  const handleStopListening = () => {
+    setIsListening(false);
+    console.log('Stopped');
+  };
+
   return (
     <View style={styles.container}>
-      {/* Instruction text */}
-      <VoiceOverlay text="Walk straight. Right turn ahead." />
+      {/* Camera View */}
+      <CameraView style={styles.camera} facing="back">
+        {/* Instruction Overlay */}
+        <SafeAreaView style={styles.overlayContainer}>
+          <VoiceOverlay text={instruction} />
+        </SafeAreaView>
+      </CameraView>
 
-      {/* Camera placeholder */}
-      <View style={styles.cameraPlaceholder} />
-
-      {/* Mic button */}
-      <MicButton />
+      {/* Mic Button */}
+      <MicButton
+        isListening={isListening}
+        onStartListening={handleStartListening}
+        onStopListening={handleStopListening}
+      />
     </View>
   );
 }
@@ -22,10 +42,14 @@ export default function NavigationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.background,
+    backgroundColor: '#000',
   },
-  cameraPlaceholder: {
+  camera: {
     flex: 1,
-    backgroundColor: '#222',
+  },
+  overlayContainer: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
 });
